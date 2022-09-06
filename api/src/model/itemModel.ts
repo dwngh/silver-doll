@@ -38,5 +38,27 @@ export function itemModelFunction() {
         })
     }
 
-    return {createItem, getItem, getItemList};
+    const updateItem = (item, id, result) => {
+        sql.query('UPDATE items SET name = ? , status = ? WHERE id = ?', [item.name, item.status, id], (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+            } else {
+                result(null, res);
+            }
+        })
+    }
+
+    const deleteItem = (id, result) => {
+        sql.query('DELETE FROM items WHERE id = ?', [id], (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+            } else {
+                result(null, res);
+            }
+        })
+    }
+
+    return {createItem, getItem, getItemList, updateItem, deleteItem};
 }
