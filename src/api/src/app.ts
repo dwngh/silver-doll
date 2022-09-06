@@ -1,12 +1,20 @@
 import appRouter from "./route/appRoutes";
 import express, {application} from "express";
+import cors from 'cors';
+import helmet from 'helmet'
 
 export default class App {
-    private app: application;
+    private app;
     constructor() {
         this.app = express();
         this.app.set('port', 3333);
-        this.app.use(appRouter)
+
+        this.app.use(cors());
+        this.app.use(helmet());
+        this.app.use(express.json());
+
+        this.app.use(appRouter);
+        console.log(this.app)
     }
 
     async listen() {
