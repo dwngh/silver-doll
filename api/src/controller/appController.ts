@@ -26,7 +26,10 @@ export const get_item_list = (req, res) => {
 
 export const create_item = (req, res) => {
     const item = req.body;
-    if (!item.name || item.status === undefined){
+    item.created_at = new Date();
+    item.status = item.status ?? 1;
+    delete item.id;
+    if (!item.name){
         res.status(400).send({ error:true, message: 'Name or status cannot be empty' });
     } else {
         createItem(item, (err, result) => {

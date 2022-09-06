@@ -37,7 +37,6 @@ export const Item = ({
 
     const onDeleteItem = () => {
         onDelete(id);
-        toggleEdit();
     }
 
     return (

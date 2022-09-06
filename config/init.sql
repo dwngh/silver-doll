@@ -2,7 +2,7 @@ CREATE DATABASE sliver;
 USE sliver;
 
 CREATE TABLE `items` (
- `id` int(11) NOT NULL,
+  id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
  `name` varchar(200) NOT NULL,
  `status` tinyint(1) NOT NULL DEFAULT '1',
  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP

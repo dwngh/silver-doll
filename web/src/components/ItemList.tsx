@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Item } from "./Item";
 import { ItemService } from "../service/ItemService";
+import { AppendingItem } from "./AppendingItem";
 
 export const ItemList = () => {
     const [items, setItems] = useState<any[]>([]);
-    const { getAllItem, updateItem, deleteItem } = ItemService();
+    const [isAppend, setIsAppend] = useState(false);
+    const { getAllItem, updateItem, deleteItem, createItem } = ItemService();
 
     const onSave = async (id: number, data: any) => {
         await updateItem(id, data);
@@ -18,13 +20,23 @@ export const ItemList = () => {
         setItems(temp);
     };
 
+    const addItem = async (item: any) => {
+        setIsAppend(false);
+        await createItem(item);
+        fetchData();
+    };
+
+    const openAppend = () => {
+        setIsAppend(true);
+    };
+
     const onDelete = async (id: number) => {
         if (id !== undefined) {
             await deleteItem(id);
             console.log("Delete successfully!");
             fetchData();
         }
-    }
+    };
 
     useEffect(() => {
         fetchData();
@@ -42,15 +54,20 @@ export const ItemList = () => {
                     onDelete={onDelete}
                 />
             ))}
-            <button
-                style={{
-                    backgroundColor: "gray",
-                    padding: 30,
-                    margin: 20,
-                }}
-            >
-                Add More ...
-            </button>
+            {isAppend ? (
+                <AppendingItem onSave={addItem} close={() => setIsAppend(false)} />
+            ) : (
+                <button
+                    style={{
+                        backgroundColor: "gray",
+                        padding: 30,
+                        margin: 20,
+                    }}
+                    onClick={openAppend}
+                >
+                    Add More ...
+                </button>
+            )}
         </div>
     );
 };
