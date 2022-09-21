@@ -1,12 +1,14 @@
 import mysql from 'mysql';
+import * as dotenv from 'dotenv'
+dotenv.config();
 
 //local mysql db connection
 export const connection = mysql.createConnection({
-    host     : 'localhost',
-    port     : 3307,
-    user     : 'root',
-    password : '1234',
-    database : 'sliver'
+    host     : process.env.HOST,
+    port     : process.env.DB_PORT,
+    user     : process.env.DB_USERNAME,
+    password : process.env.DB_PASSWORD,
+    database : process.env.DATABASE,
 });
 // connect to database
 connection.connect(function(err) {

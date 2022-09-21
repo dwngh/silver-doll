@@ -2,19 +2,21 @@ import appRouter from "./route/appRoutes";
 import express, {application} from "express";
 import cors from 'cors';
 import helmet from 'helmet'
+import * as dotenv from 'dotenv'
 
 export default class App {
     private app;
     constructor() {
         this.app = express();
-        this.app.set('port', 3333);
+
+        dotenv.config();
+        this.app.set('port', process.env.PORT);
 
         this.app.use(cors());
         this.app.use(helmet());
         this.app.use(express.json());
 
         this.app.use(appRouter);
-        console.log(this.app)
     }
 
     async listen() {
